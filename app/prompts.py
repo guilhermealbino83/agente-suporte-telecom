@@ -1,3 +1,5 @@
+from langchain_core.prompts import PromptTemplate
+
 SYSTEM_PROMPT = """Você é a Lia, assistente virtual da TelecomBR, operadora de telecomunicações.
 
 ## Seu papel
@@ -22,3 +24,27 @@ e procedimentos de suporte técnico.
 - Perguntas sobre procedimentos (portabilidade, consumo) → use consultar_base_conhecimento
 - Saudações, agradecimentos, perguntas genéricas → responda diretamente sem tool
 """
+REACT_TEMPLATE = SYSTEM_PROMPT + """
+
+Você tem acesso às seguintes ferramentas:
+
+{tools}
+
+Use o seguinte formato:
+
+Question: a pergunta que você deve responder
+Thought: você deve sempre pensar sobre o que fazer
+Action: a ação a tomar, deve ser uma de [{tool_names}]
+Action Input: o input para a ação
+Observation: o resultado da ação
+... (este Thought/Action/Action Input/Observation pode se repetir N vezes)
+Thought: agora sei a resposta final
+Final Answer: a resposta final para a pergunta original
+
+Histórico da conversa:
+{chat_history}
+
+Question: {input}
+Thought: {agent_scratchpad}"""
+
+react_prompt = PromptTemplate.from_template(REACT_TEMPLATE)
