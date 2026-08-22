@@ -47,7 +47,10 @@ Sempre parta da `main` atualizada:
 git checkout main
 git pull origin main
 git checkout -b feature/etapa-004
+git push -u origin feature/etapa-004
 ```
+
+> O `git checkout -b` cria a branch apenas localmente. O `git push -u origin` a publica no GitHub e vincula as duas — nos pushes seguintes desta branch basta `git push`.
 
 Convenção de nome: `feature/etapa-00<numero>`.
 
