@@ -1,5 +1,10 @@
 fastapi
 uvicorn[standard]
-langchain
+langchain==0.3.25
 langchain-anthropic
 python-dotenv
+faiss-cpu
+langchain-community
+langchain-huggingface
+sentence-transformers
+pypdf
