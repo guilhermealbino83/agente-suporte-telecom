@@ -4,10 +4,12 @@ from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain.agents import create_react_agent, AgentExecutor
 from langchain import hub
 from app.tools import consultar_base_conhecimento
+from app.prompts import SYSTEM_PROMPT
 
 llm = ChatAnthropic(model="claude-haiku-4-5-20251001", temperature=0)
 
 react_prompt = hub.pull("hwchase17/react")
+react_prompt = react_prompt.partial(instructions=SYSTEM_PROMPT)
 
 tools = [consultar_base_conhecimento]
 
