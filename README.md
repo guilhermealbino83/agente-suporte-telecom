@@ -29,7 +29,8 @@ agente-suporte-telecom/
 │   ├── agent.py     # Agente ReAct + memory store por session_id
 │   ├── tools.py     # Tool: consultar_base_conhecimento
 │   └── kb.py        # Carrega docs/ → FAISS vector store
-├── docs/            # Base de conhecimento local (TXT, PDF, CSV)
+├── docs/            # Base de conhecimento RAG (TXT, PDF, CSV)
+├── .spec/           # Guias de implementação por etapa (mentoria)
 ├── requirements.txt
 └── README.md
 ```
@@ -54,5 +55,5 @@ agente-suporte-telecom/
 - FastAPI + Uvicorn
 - LangChain (chains, agents, memory, document loaders)
 - FAISS (vector store in-memory)
-- OpenAI ou Anthropic (via LangChain)
+- Anthropic Claude (via LangChain)
 - Langfuse (Etapa 5)
