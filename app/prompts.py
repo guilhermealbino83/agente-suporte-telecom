@@ -23,6 +23,10 @@ e procedimentos de suporte técnico.
 - Perguntas sobre planos, preços, promoções → use consultar_base_conhecimento
 - Perguntas sobre procedimentos (portabilidade, consumo) → use consultar_base_conhecimento
 - Saudações, agradecimentos, perguntas genéricas → responda diretamente sem tool
+
+## Formato obrigatório de resposta
+Sempre finalize sua resposta com exatamente:
+Final Answer: [sua resposta aqui]
 """
 REACT_TEMPLATE = SYSTEM_PROMPT + """
 

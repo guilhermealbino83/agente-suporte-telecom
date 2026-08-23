@@ -17,7 +17,7 @@ agent_executor = AgentExecutor(
     tools=tools,
     verbose=True,
     handle_parsing_errors=True,
-    max_iterations=5,
+    max_iterations=10,
 )
 
 _store: dict[str, InMemoryChatMessageHistory] = {}
@@ -35,10 +35,7 @@ chain_with_memory = RunnableWithMessageHistory(
 )
 
 def get_langfuse_handler(session_id: str, user_id: str | None = None):
-    return CallbackHandler(
-        session_id=session_id,    # agrupa traces da mesma conversa
-        user_id=user_id,          # opcional: identifica o usuário
-    )
+    return CallbackHandler()
 
 def chat(session_id: str, message: str) -> str:
     langfuse_handler = get_langfuse_handler(session_id)
@@ -50,5 +47,5 @@ def chat(session_id: str, message: str) -> str:
                 },
     )
 
-    trace_id = langfuse_handler.get_trace_id()
+    trace_id = langfuse_handler.last_trace_id
     return response["output"], trace_id

@@ -2,7 +2,6 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from pydantic import BaseModel
 from dotenv import load_dotenv
-from app.kb import create_retriever
 
 load_dotenv()  # carrega o .env com as chaves de API
 
@@ -37,8 +36,8 @@ class ChatResponse(BaseModel):
 
 @app.post("/chat", response_model=ChatResponse)
 def handle_chat(request: ChatRequest) -> ChatResponse:
-    resposta = chat(request.session_id, request.message)
-    return ChatResponse(response=resposta)
+    resposta, trace_id = chat(request.session_id, request.message)
+    return ChatResponse(response=resposta, trace_id=trace_id)
 
 @app.post("/score")
 def add_score(request: ScoreRequest):
