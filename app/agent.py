@@ -4,6 +4,7 @@ from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain.agents import create_react_agent, AgentExecutor
 from app.tools import consultar_base_conhecimento
 from app.prompts import react_prompt
+from langfuse.langchain import CallbackHandler
 
 llm = ChatAnthropic(model="claude-haiku-4-5-20251001", temperature=0)
 
@@ -33,9 +34,21 @@ chain_with_memory = RunnableWithMessageHistory(
     history_messages_key="chat_history",
 )
 
+def get_langfuse_handler(session_id: str, user_id: str | None = None):
+    return CallbackHandler(
+        session_id=session_id,    # agrupa traces da mesma conversa
+        user_id=user_id,          # opcional: identifica o usuário
+    )
+
 def chat(session_id: str, message: str) -> str:
+    langfuse_handler = get_langfuse_handler(session_id)
+    
     response = chain_with_memory.invoke(
         {"input": message},
-        config={"configurable": {"session_id": session_id}},
+        config={"configurable": {"session_id": session_id},
+                "callbacks":[langfuse_handler],
+                },
     )
-    return response["output"]
+
+    trace_id = langfuse_handler.get_trace_id()
+    return response["output"], trace_id
